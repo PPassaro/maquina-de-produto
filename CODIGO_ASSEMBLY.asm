@@ -4,7 +4,7 @@
 	msg1: .asciiz "  Valor insuficiente para compra "
 	msg2: .asciiz "  Valor Suficiente "
 	msg3: .asciiz "  Não há troco "
-	msg4: .asciiz "  H� troco "
+	msg4: .asciiz "  Há troco "
 	msg5: .asciiz "  Valor pago(em centavos): R$ "
 	msg6: .asciiz "  Valor do produto selecionado(em centavos): R$ "
 	msg7: .asciiz "  Troco(em centavos): R$ "
@@ -26,24 +26,24 @@
 main: 
  # Total($t2) =  ($s0 * 20) + ($s1 * 10) + ($s2 * 5) + ($s3 * 2) + ($s4 * 1) + ($s5 * 0.5) + ($s6 * 0.25) + ($s7 * 0.10);
  # Para um melhor calculo, foi passado todos os valores para centavos.
- # R$20,00 = 2000 ... Ent�o:
+ # R$20,00 = 2000 ... Então:
  # Total($t2) =  ($s0 * 2000) + ($s1 * 1000) + ($s2 * 500) + ($s3 * 200) + ($s4 * 100) + ($s5 * 50) + ($s6 * 25) + ($s7 * 10);
 
-	#Armazenamento e multiplica��o dos valores das c�dulas e moedas em centavos
+	#Armazenamento e multiplicação dos valores das cédulas e moedas em centavos
 
-	li $s0, 1 #Quantidade de c�dulas de R$20,00 inseridas.
+	li $s0, 1 #Quantidade de cédulas de R$20,00 inseridas.
 	mul $s0, $s0, 2000 #multiplicando a quantidade de celulas pelo valor da nota em centavos
 	
-	li $s1, 1 #Quantidade de c�dulas de R$10,00 inseridas.
+	li $s1, 1 #Quantidade de cédulas de R$10,00 inseridas.
 	mul $s1, $s1, 1000 #multiplicando a quantidade de celulas pelo valor da nota em centavos
 	
-	li $s2, 1 #Quantidade de c�dulas de R$5,00 inseridas.
+	li $s2, 1 #Quantidade de cédulas de R$5,00 inseridas.
 	mul $s2, $s2, 500 #multiplicando a quantidade de celulas pelo valor da nota em centavos
 	
-	li $s3, 1 #Quantidade de c�dulas de R$2,00 inseridas.
+	li $s3, 1 #Quantidade de cédulas de R$2,00 inseridas.
 	mul $s3, $s3, 200 #multiplicando a quantidade de celulas pelo valor da nota em centavos
 	
-	li $s4, 1 #Quantidade de c�dulas de R$1,00 inseridas.
+	li $s4, 1 #Quantidade de cédulas de R$1,00 inseridas.
 	mul $s4, $s4, 100 #multiplicando a quantidade de moedas pelo valor da moeda em centavos
 	
 	li $s5, 1 #Quantidade de moedas de R$0,50 inseridas.
@@ -70,13 +70,13 @@ main:
 	li $t9, 3085 #R$30,85 - Valor do produto x100
 
 	
-## Come�ando o PRIMEIRO if para valida��o do valor para compra ##
+## Começando o PRIMEIRO if para validação do valor para compra ##
 
 	#if (total > produto)
 	bgt $t2, $t9, pt1 # If total > produto vai para a pt1 do if 
 	li $v0, 4
 	la $a0, msg1 	# imprimindo a mensagem 1 que foi inicializada no .data
-	li $t0, 1 	# t0 retorna a 1 quando o valor N�O for suficienta para compra
+	li $t0, 1 	# t0 retorna a 1 quando o valor NÃO for suficienta para compra
 	syscall 
 	b pt3
 
@@ -87,7 +87,7 @@ pt1: 	#Primeira parte do if 1
 	syscall	
 		
 		
-## Come�ando o SEGUNDO if para validar se ter� troco ou n�o ##
+## Começando o SEGUNDO if para validar se terá troco ou não ##
 
 	li $v0, 4
 	la $a0, enter 	# Pular linha entre as respostas.
@@ -96,17 +96,17 @@ pt1: 	#Primeira parte do if 1
 	#if (produto = total)
 	beq $t2, $t9, pt2 # If total = produto vai para a pt3 do if 
 	li $v0, 4
-	la $a0, msg4	# imprimindo a mensagem 4 que foi inicializada no .data ("H� troco")
+	la $a0, msg4	# imprimindo a mensagem 4 que foi inicializada no .data ("Há troco")
 	syscall 
 	b pt3
 
 pt2: 	#Primeira parte do if 2
 	li $v0, 4
-	la $a0, msg3  	# imprimindo a mensagem 3 que foi inicializada no .data ("N�o h� troco")
+	la $a0, msg3  	# imprimindo a mensagem 3 que foi inicializada no .data ("Não há troco")
 	syscall	
 	
 	
-pt3:	# Terceira parte do c�digo
+pt3:	# Terceira parte do código
 
 	# Pular linha entre as respostas.
 	li $v0, 4
@@ -156,7 +156,7 @@ pt3:	# Terceira parte do c�digo
 	
 
  # while para troco de nota 20 (2000 centavos)#
- # O Loop faz a condi��o e caso ela seja verdadeira, ele adiciona 1 ao registrador $a1 e depois subtrai o troco pela nota (no caso 2000)
+ # O Loop faz a condição e caso ela seja verdadeira, ele adiciona 1 ao registrador $a1 e depois subtrai o troco pela nota (no caso 2000)
  # Caso seja falso, ele vai para o proximo loop.
  # O MESMO SE REPETE PARA CADA BLOCO DE LOOP #
  
@@ -183,7 +183,7 @@ pt3:	# Terceira parte do c�digo
  
  
 	loop:
-		blt $t3, $a1, loop2	# (Se Troco menor que 2000 ent�o v� para o proximo loop e fa�a as condi��es dele)
+		blt $t3, $a1, loop2	# (Se Troco menor que 2000 então vá para o proximo loop e faça as condições dele)
 	
 		addi $s0, $s0, 1	# Qtd_cedula = Qtd_cedula + 1
 		subi $t3, $t3, 2000	# Troco = troco - 2000
@@ -192,7 +192,7 @@ pt3:	# Terceira parte do c�digo
 		
 	# while para troco de nota 10 (1000 centavos)#
 	loop2:
-		blt $t3, $a2, loop3	# (Se Troco menor que 1000 ent�o v� para o proximo loop e fa�a as condi��es dele)
+		blt $t3, $a2, loop3	# (Se Troco menor que 1000 então vá para o proximo loop e faça as condições dele)
 	
 		addi $s1, $s1, 1
 		subi $t3, $t3, 1000
@@ -202,7 +202,7 @@ pt3:	# Terceira parte do c�digo
 		
 	# while para troco de nota 5 (500 centavos)#
 	loop3:
-		blt $t3, $a3, loop4	# (Se Troco menor que 500 ent�o v� para o proximo loop e fa�a as condi��es dele)
+		blt $t3, $a3, loop4	# (Se Troco menor que 500 então vá para o proximo loop e faça as condições dele)
 	
 		addi $s2, $s2, 1
 		subi $t3, $t3, 500
@@ -212,7 +212,7 @@ pt3:	# Terceira parte do c�digo
 	
 	# while para troco de nota 2 (200 centavos)#
 	loop4:
-		blt $t3, $t4, loop5	# (Se Troco menor que 200 ent�o v� para o proximo loop e fa�a as condi��es dele)
+		blt $t3, $t4, loop5	# (Se Troco menor que 200 então vá para o proximo loop e faça as condições dele)
 	
 		addi $s3, $s3, 1
 		subi $t3, $t3, 200
@@ -222,7 +222,7 @@ pt3:	# Terceira parte do c�digo
 		
 	# while para troco de moeda 1 (100 centavos)#
 	loop5:
-		blt $t3, $t5, loop6	# (Se Troco menor que 100 ent�o v� para o proximo loop e fa�a as condi��es dele)
+		blt $t3, $t5, loop6	# (Se Troco menor que 100 então vá para o proximo loop e faça as condições dele)
 	
 		addi $s4, $s4, 1
 		subi $t3, $t3, 100
@@ -232,7 +232,7 @@ pt3:	# Terceira parte do c�digo
 	
 	# while para troco de moeda 0,50 (50 centavos)#
 	loop6:
-		blt $t3, $t6, loop7	# (Se Troco menor que 50 ent�o v� para o proximo loop e fa�a as condi��es dele) 
+		blt $t3, $t6, loop7	# (Se Troco menor que 50 então vá para o proximo loop e faça as condições dele)
 	
 		addi $s5, $s5, 1
 		subi $t3, $t3, 50
@@ -242,7 +242,7 @@ pt3:	# Terceira parte do c�digo
 		
 	# while para troco de moeda 0,25 (25 centavos)#
 	loop7:
-		blt $t3, $t7, loop8	# (Se Troco menor que 25 ent�o v� para o proximo loop e fa�a as condi��es dele)   
+		blt $t3, $t7, loop8	# (Se Troco menor que 25 então vá para o proximo loop e faça as condições dele)
 	
 		addi $s6, $s6, 1
 		subi $t3, $t3, 25
@@ -252,7 +252,7 @@ pt3:	# Terceira parte do c�digo
 	
 	# while para troco de moeda 0,10 (10 centavos)#
 	loop8:
-		blt $t3, $t8, loop9	# (Se Troco menor que 10 ent�o v� para o proximo loop e fa�a as condi��es dele)  
+		blt $t3, $t8, loop9	# (Se Troco menor que 10 então vá para o proximo loop e faça as condições dele)
 	
 		addi $s7, $s7, 1
 		subi $t3, $t3, 10
@@ -261,7 +261,7 @@ pt3:	# Terceira parte do c�digo
 		
 	# while para troco de moeda 0,05 (5 centavos)#
 	loop9:
-		blt $t3, $k0, fora	# (Se Troco menor que 5 ent�o v� para final dos loops e fa�a as condi��es restantes.) 
+		blt $t3, $k0, fora	# (Se Troco menor que 5 então vá para o proximo loop e faça as condições dele) 
 	
 		addi $t9, $t9, 1
 		subi $t3, $t3, 10
@@ -271,7 +271,7 @@ pt3:	# Terceira parte do c�digo
 	#Saindo de todos os loops
 	fora:
 
-# Aqui irei imprimir o texto que est� armazenado em .data + o resultado de cada loop. Imprimirei a quantidade de cada nota e moeda que ter� que ser dada de troco.
+# Aqui irei imprimir o texto que está armazenado em .data + o resultado de cada loop. Imprimirei a quantidade de cada nota e moeda que terá que ser dada de troco.
 	
 	# Pular duas linhas entre as respostas.
 	li $v0, 4
